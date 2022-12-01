@@ -148,57 +148,19 @@ class Program
                 Console.WriteLine("<<<--- Объект: " + (i + 1));
                 all[i].PrintInfo();
             }
-
+            
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("================================");
             Console.WriteLine("-------- Рейтинг фильмов -------");
-            var filtred = filmsAndSerials.Where(x => x.Mark >= 3).Where(x => x.Mark < 5);
-            int k = 0, topOneMark = 0, topTwoMark = 0, topThreeMark = 0;
-            List<IFilm> top = new List<IFilm>();
-            top.Add(new Film("", 0, 0));
-            top.Add(new Film("", 0, 0));
-            top.Add(new Film("", 0, 0));
-            foreach (var item in filtred)
+            var top = filmsAndSerials
+                .Where(x => x.Mark >= 3)
+                .Where(x => x.Mark < 5)
+                .OrderBy(x => x.Mark)
+                .Take(3);
+            foreach (IFilm item in top)
             {
-                if (item.Mark > topThreeMark)
-                {
-                    if (item.Mark > topTwoMark)
-                    {
-                        if (item.Mark > topOneMark)
-                        {
-                            top[1] = top[0];
-                            top[0] = item;
-                            topTwoMark = topOneMark;
-                            topOneMark = item.Mark;
-                        }
-                        else
-                        {
-                            top[2] = top[1];
-                            top[1] = item;
-                            topThreeMark = topTwoMark;
-                            topTwoMark = item.Mark;
-                        }
-                    }
-                    else
-                    {
-                        top[2] = item;
-                        topThreeMark = item.Mark;
-                    }
-                }
-            }
-            top.Reverse();
-            foreach (var item in top)
-            {
-                if ((k < 3) && (item.Mark > 0))
-                {
-                    Console.WriteLine("--------------------------------");
-                    Console.WriteLine("------------- ТОП " + (3 - k) + " ------------");
-                    item.PrintInfo();
-                }
-                else if (k > 2)
-                    break;
-                k++;
+                item.PrintInfo();
             }
             bool getAnswer = false;
             while (!getAnswer)
