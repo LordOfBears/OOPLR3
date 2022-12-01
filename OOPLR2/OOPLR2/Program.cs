@@ -179,7 +179,7 @@ class Program
                         Console.WriteLine("-------- Введите оценку --------");
                         bool requestWasReded = false;
                         int request = 0;
-                        while (!requestWasReded)
+                        while (!requestWasReaded)
                         {
                             try
                             {
