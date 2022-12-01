@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 class Program
 {
     public static void Main()
@@ -148,20 +149,13 @@ class Program
                 Console.WriteLine("<<<--- Объект: " + (i + 1));
                 all[i].PrintInfo();
             }
-            
+
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("================================");
-            Console.WriteLine("-------- Рейтинг фильмов -------");
-            var top = filmsAndSerials
-                .Where(x => x.Mark >= 3)
-                .Where(x => x.Mark < 5)
-                .OrderBy(x => x.Mark)
-                .Take(3);
-            foreach (IFilm item in top)
-            {
-                item.PrintInfo();
-            }
+            DataProcessor<IFilm> dataProcessor = new DataProcessor<IFilm>();
+            Thread task = new Thread(() => dataProcessor.DataProcessing(filmsAndSerials));
+            task.Start();
+
             bool getAnswer = false;
             while (!getAnswer)
             {
@@ -179,7 +173,7 @@ class Program
                         Console.WriteLine("-------- Введите оценку --------");
                         bool requestWasReded = false;
                         int request = 0;
-                        while (!requestWasReaded)
+                        while (!requestWasReded)
                         {
                             try
                             {
