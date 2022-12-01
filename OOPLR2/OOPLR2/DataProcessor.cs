@@ -21,4 +21,37 @@ class DataProcessor<T>
             item.PrintInfo();
         }
     }
+    public void Search(List<IFilm> list)
+    {
+        Console.WriteLine("================================");
+        Console.WriteLine("-------- Введите оценку --------");
+        bool requestWasReded = false;
+        int request = 0;
+        while (!requestWasReded)
+        {
+            try
+            {
+                request = int.Parse(Console.ReadLine());
+                requestWasReded = true;
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("!!! Ошибка, введите число !!!");
+            }
+        }
+        var result = list.Where(x => x.Mark == request);
+        if (result.Count() > 0)
+        {
+            foreach (var item in result)
+            {
+                item.PrintInfo();
+                break;
+            }
+        }
+        else
+        {
+            Console.WriteLine("================================");
+            Console.WriteLine("------- Объект не найден -------");
+        }
+    }
 }

@@ -152,10 +152,12 @@ class Program
 
             Console.WriteLine();
             Console.WriteLine();
-            DataProcessor<IFilm> dataProcessor = new DataProcessor<IFilm>();
-            Thread task = new Thread(() => dataProcessor.DataProcessing(filmsAndSerials));
-            task.Start();
 
+            DataProcessor<IFilm> dataProcessor = new DataProcessor<IFilm>();
+            Thread task1 = new Thread(() => dataProcessor.DataProcessing(filmsAndSerials));
+            task1.Start();
+            Thread.Sleep(250);
+            
             bool getAnswer = false;
             while (!getAnswer)
             {
@@ -169,36 +171,10 @@ class Program
                 switch (usersAnswer)
                 {
                     case 1:
-                        Console.WriteLine("================================");
-                        Console.WriteLine("-------- Введите оценку --------");
-                        bool requestWasReded = false;
-                        int request = 0;
-                        while (!requestWasReded)
-                        {
-                            try
-                            {
-                                request = int.Parse(Console.ReadLine());
-                                requestWasReded = true;
-                            }
-                            catch (FormatException e)
-                            {
-                                Console.WriteLine("!!! Ошибка, введите число !!!");
-                            }
-                        }
-                        var result = filmsAndSerials.Where(x => x.Mark == request);
-                        if (result.Count() > 0)
-                        {
-                            foreach (var item in result)
-                            {
-                                item.PrintInfo();
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("================================");
-                            Console.WriteLine("------- Объект не найден -------");
-                        }
+                        Thread task2 = new Thread(() => dataProcessor.Search(filmsAndSerials));
+                        task2.Start();
+                        while (task2.IsAlive)
+                            Thread.Sleep(100);
                         break;
                     case 2:
                         getAnswer = true;
