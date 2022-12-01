@@ -177,7 +177,20 @@ class Program
                     case 1:
                         Console.WriteLine("================================");
                         Console.WriteLine("-------- Введите оценку --------");
-                        int request = int.Parse(Console.ReadLine());
+                        bool requestWasReded = false;
+                        int request = 0;
+                        while (!requestWasReded)
+                        {
+                            try
+                            {
+                                request = int.Parse(Console.ReadLine());
+                                requestWasReded = true;
+                            }
+                            catch (FormatException e)
+                            {
+                                Console.WriteLine("!!! Ошибка, введите число !!!");
+                            }
+                        }
                         var result = filmsAndSerials.Where(x => x.Mark == request);
                         if (result.Count() > 0)
                         {
