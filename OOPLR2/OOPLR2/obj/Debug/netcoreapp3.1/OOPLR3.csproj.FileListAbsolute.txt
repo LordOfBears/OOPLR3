@@ -1,0 +1,14 @@
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\bin\Debug\netcoreapp3.1\OOPLR3.exe
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\bin\Debug\netcoreapp3.1\OOPLR3.deps.json
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\bin\Debug\netcoreapp3.1\OOPLR3.runtimeconfig.json
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\bin\Debug\netcoreapp3.1\OOPLR3.runtimeconfig.dev.json
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\bin\Debug\netcoreapp3.1\OOPLR3.dll
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\bin\Debug\netcoreapp3.1\OOPLR3.pdb
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\obj\Debug\netcoreapp3.1\OOPLR3.csproj.AssemblyReference.cache
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\obj\Debug\netcoreapp3.1\OOPLR3.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\obj\Debug\netcoreapp3.1\OOPLR3.AssemblyInfoInputs.cache
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\obj\Debug\netcoreapp3.1\OOPLR3.AssemblyInfo.cs
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\obj\Debug\netcoreapp3.1\OOPLR3.csproj.CoreCompileInputs.cache
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\obj\Debug\netcoreapp3.1\OOPLR3.dll
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\obj\Debug\netcoreapp3.1\OOPLR3.pdb
+C:\Users\TopUserInTheWorld\source\repos\OOPLR2\OOPLR2\obj\Debug\netcoreapp3.1\OOPLR3.genruntimeconfig.cache
