@@ -183,38 +183,33 @@ class Program
                         Console.WriteLine("-------- Введите оценку --------");
                         bool requestWasReded = false;
                         int request = 0;
-                        while (!requestWasReded)
+                        Thread task2 = new Thread(() =>
                         {
-                            try
+                            while (!requestWasReded)
                             {
-                                request = int.Parse(Console.ReadLine());
-                                requestWasReded = true;
-                                if (request < 1)
+                                try
                                 {
-                                    requestWasReded = false;
-                                    throw new MarkException("!!! Ошибка, число должно быть положительным !!!");
+                                    request = int.Parse(Console.ReadLine());
+                                    var result = dataProcessor.Search(filmsAndSerials, request);
+                                    if (result.Count() < 1)
+                                        Console.WriteLine("<<-- Объект не найден -->>");
+                                    else
+                                        foreach (var item in result)
+                                        {
+                                            item.PrintInfo();
+                                            break;
+                                        }
+                                    requestWasReded = true;
+                                }
+                                catch (FormatException e)
+                                {
+                                    Console.WriteLine("!!! Ошибка, введите целое число !!!");
+                                }
+                                catch (MarkException ex)
+                                {
+                                    Console.WriteLine("!!! Ошибка, оценка должна быть положительной !!!");
                                 }
                             }
-                            catch (FormatException e)
-                            {
-                                Console.WriteLine("!!! Ошибка, введите число !!!");
-                            }
-                            catch(MarkException ex)
-                            {
-                                Console.WriteLine($"{ex.Message}");
-                            }
-                        }
-                        Thread task2 = new Thread(() => 
-                        { 
-                            var result = dataProcessor.Search(filmsAndSerials, request);
-                            if (result.Count() < 1)
-                                Console.WriteLine("<<-- Объект не найден -->>");
-                            else
-                                foreach (var item in result)
-                                {
-                                    item.PrintInfo();
-                                    break;
-                                }
                         });
                         task2.Start();
                         while (task2.IsAlive)
