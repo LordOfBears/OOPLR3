@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using OOPLR3;
 class Program
 {
     public static void Main()
@@ -180,9 +181,32 @@ class Program
                     case 1:
                         Console.WriteLine("================================");
                         Console.WriteLine("-------- Введите оценку --------");
+                        bool requestWasReded = false;
+                        int request = 0;
+                        while (!requestWasReded)
+                        {
+                            try
+                            {
+                                request = int.Parse(Console.ReadLine());
+                                requestWasReded = true;
+                                if (request < 1)
+                                {
+                                    requestWasReded = false;
+                                    throw new MarkException("!!! Ошибка, число должно быть положительным !!!");
+                                }
+                            }
+                            catch (FormatException e)
+                            {
+                                Console.WriteLine("!!! Ошибка, введите число !!!");
+                            }
+                            catch(MarkException ex)
+                            {
+                                Console.WriteLine($"{ex.Message}");
+                            }
+                        }
                         Thread task2 = new Thread(() => 
                         { 
-                            var result = dataProcessor.Search(filmsAndSerials);
+                            var result = dataProcessor.Search(filmsAndSerials, request);
                             if (result.Count() < 1)
                                 Console.WriteLine("<<-- Объект не найден -->>");
                             else

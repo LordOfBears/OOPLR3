@@ -20,22 +20,8 @@ class DataProcessor<T>
             top.Add(item);
         return top;
     }
-    public List<T> Search(List<IFilm> list)
+    public List<T> Search(List<IFilm> list, int request)
     {
-        bool requestWasReded = false;
-        int request = 0;
-        while (!requestWasReded)
-        {
-            try
-            {
-                request = int.Parse(Console.ReadLine());
-                requestWasReded = true;
-            }
-            catch (FormatException e)
-            {
-                Console.WriteLine("!!! Ошибка, введите число !!!");
-            }
-        }
         var foundObjects = list.Where(x => x.Mark == request);
         List<T> result = new List<T>();
         foreach (T item in foundObjects)
