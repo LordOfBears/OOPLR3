@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using OOPLR3;
 class Program
 {
     public static void Main()
@@ -153,11 +154,12 @@ class Program
             Console.WriteLine();
             Console.WriteLine();
 
+            Console.WriteLine("================================");
+            Console.WriteLine("-------- Рейтинг фильмов -------");
             DataProcessor<IFilm> dataProcessor = new DataProcessor<IFilm>();
-            Thread task1 = new Thread(() => dataProcessor.DataProcessing(filmsAndSerials));
-            task1.Start();
-            Thread.Sleep(250);
-            
+            var top = dataProcessor.DataProcessing(filmsAndSerials);
+            foreach (var item in top)
+                item.PrintInfo();
             bool getAnswer = false;
             while (!getAnswer)
             {
@@ -171,10 +173,31 @@ class Program
                 switch (usersAnswer)
                 {
                     case 1:
-                        Thread task2 = new Thread(() => dataProcessor.Search(filmsAndSerials));
-                        task2.Start();
-                        while (task2.IsAlive)
-                            Thread.Sleep(100);
+                        Console.WriteLine("================================");
+                        Console.WriteLine("-------- Введите оценку --------");
+                        bool requestWasReded = false;
+                        int request = 0;
+                        while (!requestWasReded)
+                        {
+                            try
+                            {
+                                request = int.Parse(Console.ReadLine());
+                                var result = dataProcessor.Search(filmsAndSerials, request);
+                                if (result.Count() < 1)
+                                    Console.WriteLine("<<-- Объект не найден -->>");
+                                else
+                                    result[0].PrintInfo();    
+                                requestWasReded = true;
+                            }
+                            catch (FormatException e)
+                            {
+                                Console.WriteLine("!!! Ошибка, введите целое число !!!");
+                            }
+                            catch (MarkException ex)
+                            {
+                                Console.WriteLine("!!! Ошибка, оценка должна быть положительной !!!");
+                            }
+                        }
                         break;
                     case 2:
                         getAnswer = true;

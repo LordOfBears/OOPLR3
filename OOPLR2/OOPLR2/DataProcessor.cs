@@ -3,55 +3,34 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Linq;
+using OOPLR3;
 
 namespace OOPLR3 { }
 class DataProcessor<T>
 {
-    public void DataProcessing(List<IFilm> list)
+    public List<T> DataProcessing(List<IFilm> list)
     {
-        Console.WriteLine("================================");
-        Console.WriteLine("-------- Рейтинг фильмов -------");
-        var top = list
+        var filtredList = list
                 .Where(x => x.Mark >= 3)
                 .Where(x => x.Mark < 5)
                 .OrderBy(x => x.Mark)
+                .Reverse()
                 .Take(3);
-        foreach (IFilm item in top)
-        {
-            item.PrintInfo();
-        }
+        List<T> top = new List<T>();
+        foreach (T item in filtredList)
+            top.Add(item);
+        return top;
     }
-    public void Search(List<IFilm> list)
+    public List<T> Search(List<IFilm> list, int request)
     {
-        Console.WriteLine("================================");
-        Console.WriteLine("-------- Введите оценку --------");
-        bool requestWasReded = false;
-        int request = 0;
-        while (!requestWasReded)
+        if (request < 1)
         {
-            try
-            {
-                request = int.Parse(Console.ReadLine());
-                requestWasReded = true;
-            }
-            catch (FormatException e)
-            {
-                Console.WriteLine("!!! Ошибка, введите число !!!");
-            }
+            throw new MarkException("!!! Ошибка, число должно быть положительным !!!");
         }
-        var result = list.Where(x => x.Mark == request);
-        if (result.Count() > 0)
-        {
-            foreach (var item in result)
-            {
-                item.PrintInfo();
-                break;
-            }
-        }
-        else
-        {
-            Console.WriteLine("================================");
-            Console.WriteLine("------- Объект не найден -------");
-        }
+        var foundObjects = list.Where(x => x.Mark == request);
+        List<T> result = new List<T>();
+        foreach (T item in foundObjects)
+            result.Add(item);
+        return result;
     }
 }
