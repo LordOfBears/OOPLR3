@@ -157,15 +157,9 @@ class Program
             Console.WriteLine("================================");
             Console.WriteLine("-------- Рейтинг фильмов -------");
             DataProcessor<IFilm> dataProcessor = new DataProcessor<IFilm>();
-            Thread task1 = new Thread(() =>
-            {
-                var top = dataProcessor.DataProcessing(filmsAndSerials);
-                foreach (var item in top)
-                    item.PrintInfo();
-            });
-            task1.Start();
-            while (task1.IsAlive)
-                Thread.Sleep(50);
+            var top = dataProcessor.DataProcessing(filmsAndSerials);
+            foreach (var item in top)
+                item.PrintInfo();
             bool getAnswer = false;
             while (!getAnswer)
             {
@@ -183,37 +177,27 @@ class Program
                         Console.WriteLine("-------- Введите оценку --------");
                         bool requestWasReded = false;
                         int request = 0;
-                        Thread task2 = new Thread(() =>
+                        while (!requestWasReded)
                         {
-                            while (!requestWasReded)
+                            try
                             {
-                                try
-                                {
-                                    request = int.Parse(Console.ReadLine());
-                                    var result = dataProcessor.Search(filmsAndSerials, request);
-                                    if (result.Count() < 1)
-                                        Console.WriteLine("<<-- Объект не найден -->>");
-                                    else
-                                        foreach (var item in result)
-                                        {
-                                            item.PrintInfo();
-                                            break;
-                                        }
-                                    requestWasReded = true;
-                                }
-                                catch (FormatException e)
-                                {
-                                    Console.WriteLine("!!! Ошибка, введите целое число !!!");
-                                }
-                                catch (MarkException ex)
-                                {
-                                    Console.WriteLine("!!! Ошибка, оценка должна быть положительной !!!");
-                                }
+                                request = int.Parse(Console.ReadLine());
+                                var result = dataProcessor.Search(filmsAndSerials, request);
+                                if (result.Count() < 1)
+                                    Console.WriteLine("<<-- Объект не найден -->>");
+                                else
+                                    result[0].PrintInfo();    
+                                requestWasReded = true;
                             }
-                        });
-                        task2.Start();
-                        while (task2.IsAlive)
-                            Thread.Sleep(50);
+                            catch (FormatException e)
+                            {
+                                Console.WriteLine("!!! Ошибка, введите целое число !!!");
+                            }
+                            catch (MarkException ex)
+                            {
+                                Console.WriteLine("!!! Ошибка, оценка должна быть положительной !!!");
+                            }
+                        }
                         break;
                     case 2:
                         getAnswer = true;
